@@ -1,0 +1,3 @@
+ldap:
+  http:
+    port: 1389

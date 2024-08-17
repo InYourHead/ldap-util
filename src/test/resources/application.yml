@@ -1,0 +1,18 @@
+spring:
+  profiles:
+    default: test
+  application:
+    name: "ldap-util-test"
+test:
+  ldap:
+    integration:
+      first:
+        urls: "ldap://localhost:${ldap.http.port}"
+        baseDn: "dc=example,dc=org"
+
+logging:
+  level:
+    org:
+      springframework:
+        security:
+          ldap: DEBUG

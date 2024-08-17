@@ -34,7 +34,30 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-ldap</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-ldap</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
 
+
+        <!-- TEST -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -52,6 +75,103 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <groups>unit</groups>
+                </configuration>
+            </plugin>
+            <!-- INTEGRATION TEST PLUGINS-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <configuration>
+                    <groups>integration</groups>
+                    <systemPropertyVariables>
+                        <commandline.ldap.http.port>${ldap.http.port}</commandline.ldap.http.port>
+                        <spring.profiles.active>commandline</spring.profiles.active>
+                    </systemPropertyVariables>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>reserve-ldap-port</id>
+                        <goals>
+                            <goal>reserve-network-port</goal>
+                        </goals>
+                        <phase>process-resources</phase>
+                        <configuration>
+                            <portNames>
+                                <portName>ldap.http.port</portName>
+                            </portNames>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.45.0</version>
+                <executions>
+                    <execution>
+                        <id>prepare-it-ldap-server</id>
+                        <goals>
+                            <goal>start</goal>
+                        </goals>
+                        <configuration>
+                            <images>
+                                <image>
+                                    <name>bitnami/openldap:latest</name>
+                                    <alias>ldap-util/openldap</alias>
+                                    <run>
+                                        <ports>
+                                            <port>${ldap.http.port}:1389</port>
+                                        </ports>
+                                        <log>
+                                            <prefix>bitnami/openldap</prefix>
+                                            <date>DEFAULT</date>
+                                            <color>yellow</color>
+                                        </log>
+                                        <wait>
+                                            <log>LDAP setup finished!</log>
+                                            <time>10000</time>
+                                        </wait>
+                                        <env>
+                                            <LDAP_ADMIN_USERNAME>admin</LDAP_ADMIN_USERNAME>
+                                            <LDAP_ADMIN_PASSWORD>TestAdminPassword1234!</LDAP_ADMIN_PASSWORD>
+                                            <LDAP_USERS>joe,daisy,tom</LDAP_USERS>
+                                            <LDAP_USER_DC>users</LDAP_USER_DC>
+                                            <LDAP_GROUP>readers</LDAP_GROUP>
+                                            <LDAP_PASSWORDS>joePassword1!,daisyPassword2!,tomPassword3!</LDAP_PASSWORDS>
+                                            <LDAP_ROOT>dc=example,dc=org</LDAP_ROOT>
+                                            <LDAP_ADMIN_DN>cn=admin,dc=example,dc=org</LDAP_ADMIN_DN>
+                                            <LDAP_ENABLE_ACCESSLOG>true</LDAP_ENABLE_ACCESSLOG>
+                                        </env>
+                                    </run>
+                                </image>
+                            </images>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>remove-it-database</id>
+                        <goals>
+                            <goal>stop</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
