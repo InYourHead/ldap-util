@@ -15,10 +15,12 @@ import org.springframework.stereotype.Service;
 class LdapSearchService implements SearchService<LdapSearchConfig> {
 
     @Override
-    public Object authenticate(String username, String password, LdapSearchConfig config) throws AuthenticationException, ConfigurationException {
+    public boolean authenticate(String username, String password, LdapSearchConfig config) throws AuthenticationException, ConfigurationException {
 
         try {
-            return createAuthenticator(config).authenticate(new UsernamePasswordAuthenticationToken(username, password));
+            return createAuthenticator(config)
+                    .authenticate(new UsernamePasswordAuthenticationToken(username, password))
+                    .isAuthenticated();
         } catch (Exception e) {
             if (e instanceof org.springframework.security.core.AuthenticationException) {
                 throw new AuthenticationException(e);

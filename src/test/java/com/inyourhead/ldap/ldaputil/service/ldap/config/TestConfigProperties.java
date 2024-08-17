@@ -1,5 +1,6 @@
-package com.inyourhead.ldap.ldaputil.service.ldap;
+package com.inyourhead.ldap.ldaputil.service.ldap.config;
 
+import com.inyourhead.ldap.ldaputil.service.ldap.LdapSearchConfig;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -15,9 +16,15 @@ public class TestConfigProperties {
        log.info("Initialized {}.", this.getClass().getSimpleName());
     }
 
-    @Bean(name = "firstSearchConfig")
-    @ConfigurationProperties(prefix = "test.ldap.integration.first")
-    public LdapSearchConfig getFirstTestLdapSearchConfig() {
+    @Bean(name = "cnSearchConfig")
+    @ConfigurationProperties(prefix = "test.ldap.integration.cn")
+    public LdapSearchConfig getCnTestLdapSearchConfig() {
+        return new LdapSearchConfig();
+    }
+
+    @Bean(name = "uidSearchConfig")
+    @ConfigurationProperties(prefix = "test.ldap.integration.uid")
+    public LdapSearchConfig getUidTestLdapSearchConfig() {
         return new LdapSearchConfig();
     }
 }

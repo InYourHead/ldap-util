@@ -6,9 +6,13 @@ spring:
 test:
   ldap:
     integration:
-      first:
+      cn:
         urls: "ldap://localhost:${ldap.http.port}"
         baseDn: "dc=example,dc=org"
+      uid:
+        urls: "ldap://localhost:${ldap.http.port}"
+        baseDn: "dc=example,dc=org"
+        userSearchFilter: "uidNumber={0}"
 
 logging:
   level:

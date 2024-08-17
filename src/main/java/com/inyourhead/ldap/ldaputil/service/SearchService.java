@@ -5,7 +5,7 @@ import com.inyourhead.ldap.ldaputil.service.exception.ConfigurationException;
 
 public interface SearchService<T extends SearchConfig> {
 
-    Object authenticate(String username, String password, T config) throws AuthenticationException, ConfigurationException;
+    boolean authenticate(String username, String password, T config) throws AuthenticationException, ConfigurationException;
 
     boolean matches(SearchType type);
 

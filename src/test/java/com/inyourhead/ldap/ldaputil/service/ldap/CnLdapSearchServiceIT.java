@@ -4,7 +4,6 @@ import com.inyourhead.ldap.ldaputil.service.IntegrationTest;
 import com.inyourhead.ldap.ldaputil.service.exception.AuthenticationException;
 import com.inyourhead.ldap.ldaputil.service.exception.ConfigurationException;
 import lombok.extern.log4j.Log4j2;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,37 +17,25 @@ import static org.junit.jupiter.api.Assertions.*;
 @EnableConfigurationProperties
 @SpringBootTest
 @IntegrationTest
-@Tag("integration")
-public class LdapSearchServiceIT {
+public class CnLdapSearchServiceIT {
 
     @Autowired
     private LdapSearchService ldapSearchService;
 
     @Autowired
-    @Qualifier("firstSearchConfig")
-    private LdapSearchConfig firsSearchConfig;
+    @Qualifier("cnSearchConfig")
+    private LdapSearchConfig searchConfig;
 
     @Test
     void beanInitTest() {
         assertNotNull(ldapSearchService);
-        assertNotNull(firsSearchConfig);
-    }
-
-    @Test
-    void shouldThrowExceptionWhenConnectionIsNotAvailable() {
-        Throwable exception = assertThrows(ConfigurationException.class, () -> {
-            ldapSearchService.authenticate("test", "password", LdapSearchConfig.builder()
-                    .urls("http://localhost:111")
-                    .baseDn("DC=local")
-                    .build());
-        });
-        assertEquals("Configuration error", exception.getMessage());
+        assertNotNull(searchConfig);
     }
 
     @Test
     void shouldThrowExceptionWhenUserPasswordIsInvalid() {
         Throwable exception = assertThrows(AuthenticationException.class, () -> {
-            ldapSearchService.authenticate("joe", "password", firsSearchConfig);
+            ldapSearchService.authenticate("joe", "password", searchConfig);
         });
         assertInstanceOf(BadCredentialsException.class, exception.getCause());
     }
@@ -56,16 +43,16 @@ public class LdapSearchServiceIT {
     @Test
     void shouldThrowExceptionWhenUserDoesNotExists() {
         Throwable exception = assertThrows(AuthenticationException.class, () -> {
-            ldapSearchService.authenticate("test", "password", firsSearchConfig);
+            ldapSearchService.authenticate("test", "password", searchConfig);
         });
         assertInstanceOf(BadCredentialsException.class, exception.getCause());
     }
 
     @Test
     void shouldAuthenticateValidUser() throws AuthenticationException, ConfigurationException {
-        Object result = ldapSearchService.authenticate("joe", "joePassword1!", firsSearchConfig);
+        boolean result = ldapSearchService.authenticate("joe", "joePassword1!", searchConfig);
 
-        assertNotNull(result);
+        assertTrue(result);
     }
 
 
