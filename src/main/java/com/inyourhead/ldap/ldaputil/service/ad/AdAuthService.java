@@ -4,6 +4,7 @@ import com.inyourhead.ldap.ldaputil.service.AuthService;
 import com.inyourhead.ldap.ldaputil.service.AuthType;
 import com.inyourhead.ldap.ldaputil.service.exception.AuthenticationException;
 import com.inyourhead.ldap.ldaputil.service.exception.ConfigurationException;
+import com.inyourhead.ldap.ldaputil.service.model.Config;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,7 +26,6 @@ class AdAuthService implements AuthService<AdConfig> {
     private AuthenticationProvider createAuthenticator(AdConfig config) {
         ActiveDirectoryLdapAuthenticationProvider factory = new ActiveDirectoryLdapAuthenticationProvider(config.getDomain(), config.getUrls(), config.getBaseDn());
         factory.setSearchFilter(config.getSearchFilter());
-        factory.setUseAuthenticationRequestCredentials(config.isUseAuthenticationRequestCredentials());
         factory.setConvertSubErrorCodesToExceptions(config.isConvertSubErrorCodesToExceptions());
         config.getContextEnvironmentPropertiesOpt().ifPresent(factory::setContextEnvironmentProperties);
         return factory;
@@ -35,5 +35,10 @@ class AdAuthService implements AuthService<AdConfig> {
     @Override
     public boolean matches(AuthType type) {
         return AuthType.AD.equals(type);
+    }
+
+    @Override
+    public boolean matches(Config type) {
+        return type instanceof AdConfig;
     }
 }

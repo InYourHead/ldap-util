@@ -4,6 +4,7 @@ import com.inyourhead.ldap.ldaputil.service.AuthService;
 import com.inyourhead.ldap.ldaputil.service.AuthType;
 import com.inyourhead.ldap.ldaputil.service.exception.AuthenticationException;
 import com.inyourhead.ldap.ldaputil.service.exception.ConfigurationException;
+import com.inyourhead.ldap.ldaputil.service.model.Config;
 import org.springframework.context.annotation.Profile;
 import org.springframework.ldap.core.support.BaseLdapPathContextSource;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -46,5 +47,10 @@ class LdapAuthService implements AuthService<LdapConfig> {
     @Override
     public boolean matches(AuthType type) {
         return AuthType.LDAP.equals(type);
+    }
+
+    @Override
+    public boolean matches(Config type) {
+        return type instanceof LdapConfig;
     }
 }

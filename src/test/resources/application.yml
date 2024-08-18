@@ -36,7 +36,8 @@ logging:
       springframework:
         security:
           ldap: DEBUG
-
+          config:
+            ldap: DEBUG
 server:
   error:
     include-exception: true
