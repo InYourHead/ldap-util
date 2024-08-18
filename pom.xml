@@ -63,11 +63,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>com.unboundid</groupId>
-            <artifactId>unboundid-ldapsdk</artifactId>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
     <build>
@@ -144,7 +139,7 @@
                                                     <time>10000</time>
                                                 </wait>
                                                 <envPropertyFile>
-                                                    ./docker/.env
+                                                    ./test/.env
                                                 </envPropertyFile>
                                             </run>
                                         </image>
