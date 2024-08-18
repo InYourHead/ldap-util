@@ -20,13 +20,13 @@ test:
         urls: "ldap://localhost:${ldap.http.port}"
         baseDn: "dc=example,dc=org"
         adminCredentials:
-          username: "cn=admin,ou=users,dc=example,dc=org"
+          username: "cn=admin,dc=example,dc=org"
           password: "TestAdminPassword1234!"
         invalid:
           urls: "ldap://localhost:${ldap.http.port}"
           baseDn: "dc=example,dc=org"
           adminCredentials:
-            username: "cn=admin,ou=users,dc=example,dc=org"
+            username: "cn=admin,dc=example,dc=org"
             password: "InvalidPassword"
 
 
