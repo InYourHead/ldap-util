@@ -16,14 +16,18 @@ import static org.junit.jupiter.api.Assertions.*;
 @EnableConfigurationProperties
 @SpringBootTest
 @IntegrationTest
-public class UidNumberLdapSearchServiceIT {
+public class AdminLdapAuthServiceIT {
 
     @Autowired
-    private LdapSearchService ldapSearchService;
+    private LdapAuthService ldapSearchService;
 
     @Autowired
-    @Qualifier("uidSearchConfig")
-    private LdapSearchConfig searchConfig;
+    @Qualifier("adminSearchConfig")
+    private LdapConfig searchConfig;
+
+    @Autowired
+    @Qualifier("adminInvalidSearchConfig")
+    private LdapConfig invalidSearchConfig;
 
     @Test
     void beanInitTest() {
@@ -33,9 +37,17 @@ public class UidNumberLdapSearchServiceIT {
 
     @Test
     void shouldAuthenticateValidUser() throws AuthenticationException, ConfigurationException {
-        boolean result = ldapSearchService.authenticate("1000", "joePassword1!", searchConfig);
+        boolean result = ldapSearchService.authenticate("joe", "joePassword1!", searchConfig);
 
         assertTrue(result);
+    }
+
+    @Test
+    void shouldThrowExceptionWhenAdminPasswordIsInvalid() {
+        Throwable exception = assertThrows(AuthenticationException.class, () -> {
+            ldapSearchService.authenticate("joe", "joePassword1!", invalidSearchConfig);
+        });
+        assertTrue(org.springframework.security.core.AuthenticationException.class.isAssignableFrom(exception.getCause().getClass()));
     }
 
 

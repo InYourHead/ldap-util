@@ -14,10 +14,10 @@ import static org.junit.jupiter.api.Assertions.*;
 @EnableConfigurationProperties
 @SpringBootTest
 @IntegrationTest
-public class BaseLdapSearchServiceIT {
+public class BaseLdapAuthServiceIT {
 
     @Autowired
-    private LdapSearchService ldapSearchService;
+    private LdapAuthService ldapSearchService;
 
     @Test
     void beanInitTest() {
@@ -28,7 +28,7 @@ public class BaseLdapSearchServiceIT {
     @Test
     void shouldThrowExceptionWhenConnectionIsNotAvailable() {
         Throwable exception = assertThrows(ConfigurationException.class, () -> {
-            ldapSearchService.authenticate("test", "password", LdapSearchConfig.builder()
+            ldapSearchService.authenticate("test", "password", LdapConfig.builder()
                     .urls("http://localhost:111")
                     .baseDn("DC=local")
                     .build());

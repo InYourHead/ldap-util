@@ -1,6 +1,9 @@
 spring:
   profiles:
-    default: test
+    default:
+      - test
+      - ldap
+      - ad
   application:
     name: "ldap-util-test"
 test:
@@ -13,6 +16,19 @@ test:
         urls: "ldap://localhost:${ldap.http.port}"
         baseDn: "dc=example,dc=org"
         userSearchFilter: "uidNumber={0}"
+      admin:
+        urls: "ldap://localhost:${ldap.http.port}"
+        baseDn: "dc=example,dc=org"
+        adminCredentials:
+          username: "cn=admin,ou=users,dc=example,dc=org"
+          password: "TestAdminPassword1234!"
+        invalid:
+          urls: "ldap://localhost:${ldap.http.port}"
+          baseDn: "dc=example,dc=org"
+          adminCredentials:
+            username: "cn=admin,ou=users,dc=example,dc=org"
+            password: "InvalidPassword"
+
 
 logging:
   level:
@@ -20,3 +36,7 @@ logging:
       springframework:
         security:
           ldap: DEBUG
+
+server:
+  error:
+    include-exception: true

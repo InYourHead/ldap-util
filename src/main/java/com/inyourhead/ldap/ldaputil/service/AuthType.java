@@ -1,6 +1,6 @@
 package com.inyourhead.ldap.ldaputil.service;
 
-public enum SearchType {
+public enum AuthType {
     LDAP,
     AD
 }

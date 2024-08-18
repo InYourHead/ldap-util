@@ -1,9 +1,10 @@
 package com.inyourhead.ldap.ldaputil.service.ldap;
 
-import com.inyourhead.ldap.ldaputil.service.SearchService;
-import com.inyourhead.ldap.ldaputil.service.SearchType;
+import com.inyourhead.ldap.ldaputil.service.AuthService;
+import com.inyourhead.ldap.ldaputil.service.AuthType;
 import com.inyourhead.ldap.ldaputil.service.exception.AuthenticationException;
 import com.inyourhead.ldap.ldaputil.service.exception.ConfigurationException;
+import org.springframework.context.annotation.Profile;
 import org.springframework.ldap.core.support.BaseLdapPathContextSource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -11,40 +12,39 @@ import org.springframework.security.config.ldap.LdapBindAuthenticationManagerFac
 import org.springframework.security.ldap.DefaultSpringSecurityContextSource;
 import org.springframework.stereotype.Service;
 
+@Profile({"default", "ldap"})
 @Service
-class LdapSearchService implements SearchService<LdapSearchConfig> {
+class LdapAuthService implements AuthService<LdapConfig> {
 
     @Override
-    public boolean authenticate(String username, String password, LdapSearchConfig config) throws AuthenticationException, ConfigurationException {
+    public boolean authenticate(String username, String password, LdapConfig config) throws AuthenticationException, ConfigurationException {
 
-        try {
-            return createAuthenticator(config)
-                    .authenticate(new UsernamePasswordAuthenticationToken(username, password))
-                    .isAuthenticated();
-        } catch (Exception e) {
-            if (e instanceof org.springframework.security.core.AuthenticationException) {
-                throw new AuthenticationException(e);
-            }
-            throw new ConfigurationException(e);
-        }
+        return handleError(() -> createAuthenticator(config)
+                .authenticate(new UsernamePasswordAuthenticationToken(username, password))
+                .isAuthenticated());
     }
 
-    private AuthenticationManager createAuthenticator(LdapSearchConfig config) {
+    private AuthenticationManager createAuthenticator(LdapConfig config) {
         LdapBindAuthenticationManagerFactory factory = new LdapBindAuthenticationManagerFactory(getContextSource(config));
         factory.setUserDnPatterns(config.getUserDnPatterns().toArray(new String[0]));
         factory.setUserSearchFilter(config.getUserSearchFilter());
+        factory.setUserSearchBase(config.getUserSearchBase());
 
         return factory.createAuthenticationManager();
     }
 
-    private BaseLdapPathContextSource getContextSource(LdapSearchConfig config) {
+    private BaseLdapPathContextSource getContextSource(LdapConfig config) {
         DefaultSpringSecurityContextSource contextSource = new DefaultSpringSecurityContextSource(config.getUrlsList(), config.getBaseDn());
+        config.getAdminCredentialsOpt().ifPresent(ac -> {
+            contextSource.setUserDn(ac.getUsername());
+            contextSource.setPassword(ac.getPassword());
+        });
         contextSource.afterPropertiesSet();
         return contextSource;
     }
 
     @Override
-    public boolean matches(SearchType type) {
-        return SearchType.LDAP.equals(type);
+    public boolean matches(AuthType type) {
+        return AuthType.LDAP.equals(type);
     }
 }

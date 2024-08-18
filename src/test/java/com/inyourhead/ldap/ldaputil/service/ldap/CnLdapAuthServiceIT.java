@@ -17,14 +17,14 @@ import static org.junit.jupiter.api.Assertions.*;
 @EnableConfigurationProperties
 @SpringBootTest
 @IntegrationTest
-public class CnLdapSearchServiceIT {
+public class CnLdapAuthServiceIT {
 
     @Autowired
-    private LdapSearchService ldapSearchService;
+    private LdapAuthService ldapSearchService;
 
     @Autowired
     @Qualifier("cnSearchConfig")
-    private LdapSearchConfig searchConfig;
+    private LdapConfig searchConfig;
 
     @Test
     void beanInitTest() {

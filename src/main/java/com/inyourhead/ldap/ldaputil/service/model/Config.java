@@ -1,6 +1,8 @@
-package com.inyourhead.ldap.ldaputil.service;
+package com.inyourhead.ldap.ldaputil.service.model;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,16 +10,14 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
 @Data
-public class SearchConfig implements Serializable {
+public class Config implements Serializable {
 
     /**
      * Comma separated list of urls e.q.: ldap://localhost:389,ldap://example.com
@@ -25,8 +25,9 @@ public class SearchConfig implements Serializable {
     @NotEmpty
     private String urls;
 
+    @JsonAlias({"baseDn", "rootDn"})
     @NotEmpty
-    private String baseDn;;
+    private String baseDn;
 
     @JsonIgnore
     public List<String> getUrlsList() {
@@ -35,4 +36,5 @@ public class SearchConfig implements Serializable {
         }
         return Arrays.asList(urls.split(","));
     }
+
 }
