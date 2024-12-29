@@ -1,0 +1,12 @@
+ad:
+  hostname: ${commandline.ad.hostname}
+  http:
+    port: ${commandline.ad.http.port}
+  domain:
+    urls: "ldap://${ad.hostname}:${ad.http.port}"
+    baseDn: "DC=example,DC=local"
+    domain: "example.local"
+  nodomain:
+    urls: "ldap://${ad.hostname}:${ad.http.port}"
+    baseDn: "DC=example,DC=local"
+    domain: null

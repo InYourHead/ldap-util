@@ -1,0 +1,6 @@
+spring:
+  profiles:
+    default:
+      - test
+      - ldap
+      - ad
