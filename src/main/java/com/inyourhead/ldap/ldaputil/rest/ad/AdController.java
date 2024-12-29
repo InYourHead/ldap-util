@@ -1,10 +1,10 @@
 package com.inyourhead.ldap.ldaputil.rest.ad;
 
 import com.inyourhead.ldap.ldaputil.rest.Controller;
-import com.inyourhead.ldap.ldaputil.service.ad.AdConfig;
-import com.inyourhead.ldap.ldaputil.service.exception.AuthenticationException;
-import com.inyourhead.ldap.ldaputil.service.exception.ConfigurationException;
-import com.inyourhead.ldap.ldaputil.service.resolver.AuthResolver;
+import com.inyourhead.ldap.ldaputil.internal.service.auth.ad.AdConfig;
+import com.inyourhead.ldap.ldaputil.internal.service.exception.AuthenticationException;
+import com.inyourhead.ldap.ldaputil.internal.service.exception.ConfigurationException;
+import com.inyourhead.ldap.ldaputil.internal.service.resolver.AuthResolver;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;

@@ -1,7 +1,7 @@
 package com.inyourhead.ldap.ldaputil.rest;
 
-import com.inyourhead.ldap.ldaputil.service.exception.AuthenticationException;
-import com.inyourhead.ldap.ldaputil.service.exception.ConfigurationException;
+import com.inyourhead.ldap.ldaputil.internal.service.exception.AuthenticationException;
+import com.inyourhead.ldap.ldaputil.internal.service.exception.ConfigurationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

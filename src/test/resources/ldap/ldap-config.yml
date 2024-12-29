@@ -1,0 +1,20 @@
+authentication:
+  cn:
+    urls: "ldap://localhost:${ldap.http.port}"
+    baseDn: "dc=example,dc=org"
+  uid:
+    urls: "ldap://localhost:${ldap.http.port}"
+    baseDn: "dc=example,dc=org"
+    userSearchFilter: "uidNumber={0}"
+  admin:
+    urls: "ldap://localhost:${ldap.http.port}"
+    baseDn: "dc=example,dc=org"
+    adminCredentials:
+      username: "cn=admin,dc=example,dc=org"
+      password: "TestAdminPassword1234!"
+    invalid:
+      urls: "ldap://localhost:${ldap.http.port}"
+      baseDn: "dc=example,dc=org"
+      adminCredentials:
+        username: "cn=admin,dc=example,dc=org"
+        password: "InvalidPassword"
