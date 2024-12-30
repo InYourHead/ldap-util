@@ -1,11 +1,8 @@
 services:
   openldap:
-    image: bitnami/openldap:latest
+    image: bitnami/openldap:2.6.9
     container_name: ldap-util-openldap
-    restart: no
-    profiles:
-      - default
-      - ldap
+    restart: "no"
     env_file: ldap.env
     ports:
       - "1389:1389"

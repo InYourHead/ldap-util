@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.2</version>
+        <version>3.4.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.inyourhead.ldap</groupId>
@@ -21,11 +21,17 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-ldap</artifactId>
+            <artifactId>spring-boot-starter-security</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
@@ -34,10 +40,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-validation</artifactId>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.springdoc</groupId>
@@ -139,8 +142,14 @@
                                 <configuration>
                                     <images>
                                         <image>
-                                            <name>bitnami/openldap:2.5.19</name>
-                                            <alias>ldap-util/openldap</alias>
+                                            <alias>openldap</alias>
+
+                                            <external>
+                                                <type>compose</type>
+                                                <basedir>${project.build.directory}/../docker</basedir>
+                                                <composeFile>docker-compose.yml</composeFile>
+                                                <ignoreBuild>true</ignoreBuild>
+                                            </external>
                                             <run>
                                                 <ports>
                                                     <port>${ldap.http.port}:1389</port>
@@ -148,15 +157,12 @@
                                                 <log>
                                                     <prefix>bitnami/openldap</prefix>
                                                     <date>DEFAULT</date>
-                                                    <color>yellow</color>
+                                                    <color>blue</color>
                                                 </log>
                                                 <wait>
                                                     <log>LDAP setup finished!</log>
                                                     <time>10000</time>
                                                 </wait>
-                                                <envPropertyFile>
-                                                    ${project.build.directory}/../docker/ldap.env
-                                                </envPropertyFile>
                                             </run>
                                         </image>
                                     </images>
