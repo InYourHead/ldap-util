@@ -1,6 +1,4 @@
-FROM ubuntu:24.04
-
-RUN apt update && apt install -y openjdk-17-jdk && apt autoremove -y && apt clean -y
+FROM eclipse-temurin:17-jre-alpine
 
 COPY target/ldap-util-app.jar ldap-util-app.jar
 
