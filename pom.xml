@@ -4,19 +4,19 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.inyourhead.ldap</groupId>
     <artifactId>util-parent</artifactId>
-    <version>1.0.0</version>
+    <version>3.4.1</version>
     <name>util-parent</name>
     <description>util-parent</description>
     <properties>
-        <java.version>22</java.version>
+        <java.version>17</java.version>
         <profile.ad.disabled>true</profile.ad.disabled>
         <profile.ldap.disabled>true</profile.ldap.disabled>
     </properties>
     <packaging>pom</packaging>
 
     <modules>
-        <module>util</module>
-        <module>app</module>
+        <module>ldap-util</module>
+        <module>ldap-util-app</module>
     </modules>
 
 </project>
