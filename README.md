@@ -11,7 +11,7 @@ While everything was working with [Apache Directory Studio](https://directory.ap
 
 I created a library **com.inyourhead.ldap:util**, which provides ability to test LDAP/AD connection in easy way. 
 
-Iy uses existings spring-security features (spring-security-ldap) to ensure that your application will work as expected.
+It uses existing spring-security features (spring-security-ldap) to ensure that your application will work as expected.
 ___
 
 ## Requirements to build and run from source
