@@ -142,3 +142,4 @@ docker run -p 8080:8080 --name ldap-util-app -d inyourhead/ldap-util-app:3.4.1
 - add exportable configuration to allow testing on you own AD server
 - searching in LDAP/AD
 - return spring boot configuration to set in your application
+- add project to central maven repository
