@@ -5,12 +5,13 @@
 
 I had a lot of issues during integrating client LDAP/AD infrastructure with existing spring-boot applications. 
 
-While everything was working with [Apache Directory Studio](https://directory.apache.org/studio/) or with [ldap-utils](https://ubuntu.com/server/docs/install-and-configure-ldap), Sprig Boot application had problems with connecting to given services.
+While everything was working with [Apache Directory Studio](https://directory.apache.org/studio/) or with [ldap-utils](https://ubuntu.com/server/docs/install-and-configure-ldap), Sprig Boot application had problems with authenticating to given services.
 
 #### Solution?
 
 I created a library **com.inyourhead.ldap:util**, which provides ability to test LDAP/AD connection in easy way. 
 
+Iy uses existings spring-security features (spring-security-ldap) to ensure that your application will work as expected.
 ___
 
 ## Requirements to build and run from source
@@ -127,7 +128,7 @@ public class MyUtilService {
 
 ## I want to run application only!
 
-Sure. Grab this  [docker-compose.yml](ldap-util-app\docker-compose.yml) file and run it!
+Sure. Grab this  [docker-compose.yml](./ldap-util-app/docker-compose.yml) file and run it!
 
 You may also use docker command by running:
 
@@ -141,3 +142,4 @@ docker run -p 8080:8080 --name ldap-util-app -d inyourhead/ldap-util-app:3.4.1
 - add more tests for AD
 - add exportable configuration to allow testing on you own AD server
 - searching in LDAP/AD
+- return spring boot configuration to set in your application
