@@ -9,7 +9,7 @@ While everything was working with [Apache Directory Studio](https://directory.ap
 
 #### Solution?
 
-I created a library **com.inyourhead.ldap:util**, which provides ability to test LDAP/AD connection in easy way. 
+I created a library **io.github.inyourhead:ldap-util**, which provides ability to test LDAP/AD connection in easy way. 
 
 It uses existing spring-security features (spring-security-ldap) to ensure that your application will work as expected.
 ___
@@ -80,12 +80,13 @@ Add maven dependency to your application:
 ```xml
 
         <dependency>
-            <groupId>com.inyourhead.ldap</groupId>
+            <groupId>io.github.inyourhead</groupId>
             <artifactId>util</artifactId>
             <version>3.4.1</version>
         </dependency>
 
 ```
+(You can find it [here](https://central.sonatype.com/artifact/io.github.inyourhead/ldap-util))
 
 And in your spring boot application add:
 
@@ -139,7 +140,7 @@ docker run -p 8080:8080 --name ldap-util-app -d inyourhead/ldap-util-app:3.4.1
 ## Roadmap
 
 - add more tests for AD
-- add exportable configuration to allow testing on you own AD server
-- searching in LDAP/AD
-- return spring boot configuration to set in your application
-- add project to central maven repository
+- export configuration from AD to allow testing on you own AD server
+- allow to search in LDAP/AD
+- return spring boot configuration associated with given authentication
+- change package names according to groupId

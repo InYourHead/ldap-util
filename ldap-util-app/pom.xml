@@ -8,7 +8,7 @@
         <version>3.4.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.inyourhead.ldap</groupId>
+    <groupId>io.github.inyourhead</groupId>
     <artifactId>ldap-util-app</artifactId>
     <version>3.4.1</version>
     <name>ldap-util-app</name>
@@ -20,8 +20,8 @@
     <dependencies>
 
         <dependency>
-            <groupId>com.inyourhead.ldap</groupId>
-            <artifactId>util</artifactId>
+            <groupId>io.github.inyourhead</groupId>
+            <artifactId>ldap-util</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

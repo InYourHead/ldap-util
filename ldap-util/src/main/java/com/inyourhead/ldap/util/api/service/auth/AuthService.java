@@ -9,6 +9,15 @@ import java.util.function.Supplier;
 
 public interface AuthService<T extends Config> {
 
+    /**
+     * Authenticates a user based on the provided credentials and configuration.
+     *
+     * @param credentials The credentials containing the username and optionally the password for authentication.
+     * @param config The configuration details required for authentication.
+     * @return true if the authentication is successful, false otherwise.
+     * @throws AuthenticationException If an error occurs during the authentication process.
+     * @throws ConfigurationException If there is an issue with the provided configuration.
+     */
     boolean authenticate(Credentials credentials, T config) throws AuthenticationException, ConfigurationException;
 
 

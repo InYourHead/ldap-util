@@ -8,7 +8,7 @@
         <version>3.4.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.inyourhead.ldap</groupId>
+    <groupId>io.github.inyourhead</groupId>
     <artifactId>ldap-util</artifactId>
     <version>3.4.1</version>
     <name>ldap-util</name>
@@ -19,6 +19,27 @@
         <profile.ad.disabled>true</profile.ad.disabled>
         <profile.ldap.disabled>true</profile.ldap.disabled>
     </properties>
+
+    <description>The ldap util to check ldap/ad configuration</description>
+    <url>http://maven.apache.org</url>
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <name>Aleksander Burzec</name>
+            <email>a.h.burzec@gmail.com</email>
+        </developer>
+    </developers>
+    <scm>
+        <url>https://github.com/InYourHead/ldap-util</url>
+        <connection>scm:git:git://github.com/InYourHead/ldap-util.git</connection>
+        <developerConnection>scm:git:ssh://github.com/InYourHead/ldap-util.git</developerConnection>
+    </scm>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -203,6 +224,66 @@
             <properties>
                 <profile.ad.disabled>false</profile.ad.disabled>
             </properties>
+        </profile>
+        <profile>
+            <id>deploy</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.5</version>
+                        <!--https://maven.apache.org/plugins/maven-gpg-plugin/usage.html-->
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.sonatype.central</groupId>
+                        <artifactId>central-publishing-maven-plugin</artifactId>
+                        <version>0.6.0</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <publishingServerId>ossrh</publishingServerId>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>javadoc-jar</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
 
