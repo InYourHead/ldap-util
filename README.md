@@ -131,7 +131,7 @@ public class MyUtilService {
 
 Sure. Grab this  [docker-compose.yml](./ldap-util-app/docker-compose.yml) file and run it!
 
-You may also use docker command by running:
+You may also run docker command:
 
 ```shell
 docker run -p 8080:8080 --name ldap-util-app -d inyourhead/ldap-util-app:3.4.1 
